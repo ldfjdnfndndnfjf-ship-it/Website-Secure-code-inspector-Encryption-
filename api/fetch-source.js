@@ -40,12 +40,14 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: 'Access to local or private IP addresses is restricted.' });
         }
 
+        const clientHeaders = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+        };
+
         // Fetch Main HTML Document
         const response = await axios.get(targetUrl.href, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-            },
+            headers: clientHeaders,
             timeout: 8000 // 8-second timeout limit
         });
 
@@ -57,23 +59,60 @@ module.exports = async (req, res) => {
         const endpointsSet = new Set();
         const leaks = [];
 
-        // 1. Extract and resolve JavaScript Files
+        // Temporary storage for promise-based fetching
+        const scriptFetchPromises = [];
+        const styleFetchPromises = [];
+
+        // 1. Extract, Resolve, and Fetch JavaScript Files content
         $('script[src]').each((_, el) => {
             let src = $(el).attr('src');
             try {
                 const resolvedUrl = new URL(src, targetUrl.href).href;
-                scripts.push({ filename: src.split('/').pop() || 'script.js', url: resolvedUrl, code: `// Loader fetched link:\n// ${resolvedUrl}` });
+                const filename = src.split('/').pop().split('?')[0] || 'script.js';
+                
+                // Fetch each JS file's source code in the background
+                const fetchPromise = axios.get(resolvedUrl, { headers: clientHeaders, timeout: 4000 })
+                    .then(res => {
+                        scripts.push({ filename, url: resolvedUrl, code: res.data });
+                    })
+                    .catch(err => {
+                        // Fallback if the script cannot be fetched due to CORS or host down
+                        scripts.push({ 
+                            filename, 
+                            url: resolvedUrl, 
+                            code: `// Failed to fetch remote resource code:\n// URL: ${resolvedUrl}\n// Info: ${err.message}` 
+                        });
+                    });
+                scriptFetchPromises.push(fetchPromise);
             } catch (e) {}
         });
 
-        // 2. Extract and resolve CSS Files
+        // 2. Extract, Resolve, and Fetch CSS Files content
         $('link[rel="stylesheet"]').each((_, el) => {
             let href = $(el).attr('href');
             try {
                 const resolvedUrl = new URL(href, targetUrl.href).href;
-                styles.push({ filename: href.split('/').pop() || 'style.css', url: resolvedUrl, code: `/* Stylesheet fetched link:\n   ${resolvedUrl} */` });
+                const filename = href.split('/').pop().split('?')[0] || 'style.css';
+                
+                // Fetch each CSS file's content in the background
+                const fetchPromise = axios.get(resolvedUrl, { headers: clientHeaders, timeout: 4000 })
+                    .then(res => {
+                        styles.push({ filename, url: resolvedUrl, code: res.data });
+                    })
+                    .catch(err => {
+                        // Fallback if the stylesheet cannot be fetched
+                        styles.push({ 
+                            filename, 
+                            url: resolvedUrl, 
+                            code: `/* Failed to fetch remote resource code:\n   URL: ${resolvedUrl}\n   Info: ${err.message} */` 
+                        });
+                    });
+                styleFetchPromises.push(fetchPromise);
             } catch (e) {}
         });
+
+        // Parallel execution: Wait for all background resource requests to finish (max 4 seconds extra)
+        await Promise.all([...scriptFetchPromises, ...styleFetchPromises]);
 
         // 3. Scan for internal/external links and potential API paths
         $('a, link, script').each((_, el) => {
@@ -94,6 +133,8 @@ module.exports = async (req, res) => {
 
         for (const [keyName, regex] of Object.entries(credentialRegexes)) {
             let match;
+            // Reset regex pointer
+            regex.lastIndex = 0; 
             while ((match = regex.exec(html)) !== null) {
                 leaks.push({
                     pattern: keyName,
@@ -102,6 +143,7 @@ module.exports = async (req, res) => {
             }
         }
 
+        // Return perfectly structured response to Nawab Frontend
         return res.status(200).json({
             html: html,
             scripts: scripts,
