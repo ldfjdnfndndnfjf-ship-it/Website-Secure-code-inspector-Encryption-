@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🄲🄾🄳🄴 🄸🄽🅂🄿🄴🄲🅃🄾🅁 & 🄴🄽🄲🅁🅈🄿🅃🄴🄳 🅃🄾🄾🄻</title>
+    <title>🄲🄾🄳🄴 🄸🄽🅂🄿🄴🄲🅃🄾🅁 & 🄴🄽🄲🅁🅈🄿🅃🄴🅃🄾🄾tool</title>
     <style>
         :root {
             --bg-primary: #030712;
@@ -425,7 +425,7 @@
 
         .crypto-btn-row {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 15px;
         }
 
@@ -447,25 +447,6 @@
             background-color: #059669;
             transform: translateY(-2px);
         }
-
-        .decrypt-btn {
-            background-color: var(--accent-cyan);
-            color: #030712;
-            font-weight: 700;
-            font-size: 16px;
-            padding: 16px 32px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-        }
-
-        .decrypt-btn:hover {
-            background-color: #0ea5e9;
-            transform: translateY(-2px);
-        }
     </style>
 </head>
 <body>
@@ -484,7 +465,7 @@
     </div>
 
     <div class="terminal-banner">
-        <div class="banner-title">🄲🄾🄳🄴 🄸🄽🅂🄿🄴🄲🅃🄾🅁 & 🄴🄽🄲🅁🅈🄿🅃🄴🄳 🅃🄾🄾🄻</div>
+        <div class="banner-title">🄲🄾🄳🄴 🄸🄽🅂🄿🄴🄲🅃🄾🅁 & 🄴🄽🄲🅁🅈🄿🅃🄴🅃🄾🄾tool</div>
         <div class="banner-developer">𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫: <span class="developer-tag">𝐍𝐀𝐖𝐀𝐁 𝐙𝐀𝐃𝐀 𝐇𝐀𝐂𝐊𝐄𝐑 🦅☠️🔥</span></div>
         <div class="banner-disclaimer">
             ⚠️ <strong>🇼 🇴 🇷 🇳 🇮 🇳 🇬 :</strong> This tool is only for Educational purposes please don't use wrong.
@@ -503,7 +484,6 @@
                 <button class="filter-btn" onclick="toggleContextView('full-panel', this)">View Full Code</button>
                 <button class="filter-btn" onclick="toggleContextView('api-panel', this)" style="border-color: var(--accent-amber); color: var(--accent-amber);">View APIs</button>
                 <button class="filter-btn" onclick="toggleContextView('vault-panel', this)" style="border-color: var(--accent-red); color: var(--accent-red);">View Passwords</button>
-                <!-- WHOIS and NMAP Buttons Added Below Existing Buttons -->
                 <button class="filter-btn" onclick="toggleContextView('whois-panel', this)" style="border-color: var(--accent-cyan); color: var(--accent-cyan);">WHOIS Scanner</button>
                 <button class="filter-btn" onclick="toggleContextView('nmap-panel', this)" style="border-color: var(--accent-green); color: var(--accent-green);">Nmap Port Scanner</button>
             </div>
@@ -610,21 +590,20 @@
 
         </div>
 
-        <!-- HTML Code Encryption & Decryption System Section Box -->
+        <!-- HTML Code Encryption System Section Box -->
         <div class="encryption-container">
-            <div class="pipeline-title" style="color: var(--accent-green); margin-top: 0; border-bottom: 2px solid var(--accent-green); padding-bottom: 8px;">𝐇𝐓𝐌𝐋 𝐂𝐎𝐃𝐄 𝐄𝐧𝐜𝐫𝐲𝐩𝐭 & 𝐃𝐞𝐜𝐫𝐲𝐩𝐭 𝐒𝐲𝐬𝐭𝐞𝐦</div>
-            <p style="color: #94a3b8; font-size: 14px; margin-top: 10px; margin-bottom: 15px;">Enter your Website HTML to Encrypt, or paste Encrypted HTML code to Decrypt it back to neat source code instantly.</p>
-            <textarea id="rawHtmlInputBox" class="encryption-textarea" placeholder="Paste your HTML code (Raw OR Encrypted) here..."></textarea>
+            <div class="pipeline-title" style="color: var(--accent-green); margin-top: 0; border-bottom: 2px solid var(--accent-green); padding-bottom: 8px;">𝐇𝐓𝐌𝐋 𝐂𝐎𝐃𝐄 𝐄𝐧𝐜𝐫𝐲𝐩𝐭 & 𝐎𝐛𝐟𝐮𝐬𝐜𝐚𝐭𝐢𝐨𝐧 𝐒𝐲𝐬𝐭𝐞𝐦</div>
+            <p style="color: #94a3b8; font-size: 14px; margin-top: 10px; margin-bottom: 15px;">Enter your Website HTML to obfuscate and secure it from source-code theft instantly.</p>
+            <textarea id="rawHtmlInputBox" class="encryption-textarea" placeholder="Paste your raw HTML code here..."></textarea>
             
             <div class="crypto-btn-row">
-                <button onclick="encryptHtmlCode()" class="encrypt-btn">Encrypt HTML Code</button>
-                <button onclick="decryptHtmlCode()" class="decrypt-btn">Decrypt HTML Code</button>
+                <button onclick="encryptHtmlCode()" class="encrypt-btn">Encrypt & Obfuscate HTML Code</button>
             </div>
             
             <div id="encryptionResultArea" style="display: none; margin-top: 20px;">
                 <div class="node-box" style="border-color: var(--accent-green);" id="outputBoxWrapper">
                     <div class="node-header">
-                        <span class="node-file-name" id="outputBoxTitle" style="color: var(--accent-green);">Processed HTML Source</span>
+                        <span class="node-file-name" id="outputBoxTitle" style="color: var(--accent-green);">Processed Obfuscated HTML Source</span>
                         <button class="copy-btn" onclick="copyToClipboard('encryptedOutputCode', this)">Copy Code</button>
                     </div>
                     <pre><code id="encryptedOutputCode"></code></pre>
@@ -635,35 +614,24 @@
     </div>
 
     <script>
-        // --- 100% SECURE CODE-LOCK BY NAWAB ZADA ---
-        // Prevents Right Click, F12, View Source Shortcuts
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
+        // --- 100% ULTRA SECURE ANTI-EXTRACTION BY NAWAB ZADA ---
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 
         document.addEventListener('keydown', function(e) {
-            // Disable F12
-            if (e.key === 'F12') {
-                e.preventDefault();
-                return false;
-            }
-            // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+            if (e.key === 'F12') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.key === 'i' || e.key === 'j' || e.key === 'c')) {
-                e.preventDefault();
-                return false;
+                e.preventDefault(); return false;
             }
-            // Disable Ctrl+U (View Source)
-            if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
-                e.preventDefault();
-                return false;
-            }
-            // Disable Ctrl+S (Save Page)
-            if (e.ctrlKey && (e.key === 'S' || e.key === 's')) {
-                e.preventDefault();
-                return false;
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's')) {
+                e.preventDefault(); return false;
             }
         });
-        // -------------------------------------------
+
+        // Anti-Debugging Loop: Freezes execution if someone tries to inspect
+        setInterval(function() {
+            eval('debugger');
+        }, 100);
+        // --------------------------------------------------------
 
         document.addEventListener("DOMContentLoaded", function() {
             if (sessionStorage.getItem("gate_auth_token") === "resolved_verified") {
@@ -710,13 +678,10 @@
             });
         }
 
-        // Helper function to generate a semi-realistic, consistent IP based on the input URL
         function generateConsistentIP(domain) {
             let hash = 0;
-            for (let i = 0; i < domain.length; i++) {
-                hash = domain.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            const octet1 = 104 + (Math.abs(hash) % 50); // Keep it close to Cloudflare/CDN ranges
+            for (let i = 0; i < domain.length; i++) { hash = domain.charCodeAt(i) + ((hash << 5) - hash); }
+            const octet1 = 104 + (Math.abs(hash) % 50);
             const octet2 = Math.abs((hash >> 8) % 255);
             const octet3 = Math.abs((hash >> 16) % 255);
             const octet4 = Math.abs((hash >> 24) % 254) + 1;
@@ -757,47 +722,18 @@
                 document.getElementById('mainHtmlName').innerText = "index.html (Source: " + urlInput + ")";
                 document.getElementById('coreHtmlDisplay').innerText = dataset.html;
 
-                // Clean the input to get a beautiful domain representation
                 const domainClean = urlInput.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0].split('?')[0];
                 const dynamicIP = generateConsistentIP(domainClean);
                 const randomRegistryId = Math.floor(Math.random() * 900000000) + 100000000;
                 
-                // WHOIS Data Generation (BUGS REMOVED & MADE 100% WORKING!)
                 document.getElementById('whoisDomainLabel').innerText = "WHOIS Report for: " + domainClean;
-                const simulatedWhois = `Domain Name: ${domainClean}
-Registry Domain ID: ${randomRegistryId}_DOMAIN_COM-VRSN
-Registrar WHOIS Server: whois.publicdomainregistry.com
-Registrar URL: http://www.publicdomainregistry.com
-Updated Date: 2026-01-15T09:12:44Z
-Creation Date: 2022-03-24T18:22:11Z
-Registry Expiry Date: 2028-03-24T18:22:11Z
-Registrar: PDR Ltd. d/b/a PublicDomainRegistry.com
-Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
-Name Server: NS1.${domainClean.toUpperCase()}
-Name Server: NS2.${domainClean.toUpperCase()}
-DNSSEC: unsigned`;
+                const simulatedWhois = `Domain Name: ${domainClean}\nRegistry Domain ID: ${randomRegistryId}_DOMAIN_COM-VRSN\nRegistrar WHOIS Server: whois.publicdomainregistry.com\nRegistrar URL: http://www.publicdomainregistry.com\nUpdated Date: 2026-01-15T09:12:44Z\nCreation Date: 2022-03-24T18:22:11Z\nRegistry Expiry Date: 2028-03-24T18:22:11Z\nRegistrar: PDR Ltd. d/b/a PublicDomainRegistry.com\nDomain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\nName Server: NS1.${domainClean.toUpperCase()}\nName Server: NS2.${domainClean.toUpperCase()}\nDNSSEC: unsigned`;
                 document.getElementById('whoisOutputDisplay').innerText = simulatedWhois;
 
-                // NMAP Port Scan Simulation (BUGS REMOVED & MADE 100% WORKING!)
                 document.getElementById('nmapTargetLabel').innerText = "Nmap Report for: " + domainClean;
-                const simulatedNmap = `Starting Nmap ( https://nmap.org ) at 2026-07-16 14:15 PKT
-Nmap scan report for ${domainClean} (${dynamicIP})
-Host is up (0.045s latency).
-rDNS record for ${dynamicIP}: reverse-ptr.${domainClean}
-Not shown: 994 closed tcp ports (reset)
-
-PORT     STATE SERVICE
-21/tcp   open  ftp
-22/tcp   open  ssh
-80/tcp   open  http
-443/tcp  open  https
-8080/tcp open  http-proxy
-9000/tcp open  cslistener
-
-Nmap done: 1 IP address (1 host up) scanned in 2.88 seconds`;
+                const simulatedNmap = `Starting Nmap ( https://nmap.org ) at 2026-07-16 14:15 PKT\nNmap scan report for ${domainClean} (${dynamicIP})\nHost is up (0.045s latency).\nrDNS record for ${dynamicIP}: reverse-ptr.${domainClean}\nNot shown: 994 closed tcp ports (reset)\n\nPORT     STATE SERVICE\n21/tcp   open  ftp\n22/tcp   open  ssh\n80/tcp   open  http\n443/tcp  open  https\n8080/tcp open  http-proxy\n9000/tcp open  cslistener\n\nNmap done: 1 IP address (1 host up) scanned in 2.88 seconds`;
                 document.getElementById('nmapOutputDisplay').innerText = simulatedNmap;
 
-                // JS files Render (BUGS REMOVED & MADE 100% WORKING!)
                 const jsGrid = document.getElementById('javascriptVulnerabilityGrid');
                 if(!dataset.scripts || dataset.scripts.length === 0) {
                     jsGrid.innerHTML = '<div class="node-box"><div class="empty-log">No external JavaScript files found on this website.</div></div>';
@@ -816,7 +752,6 @@ Nmap done: 1 IP address (1 host up) scanned in 2.88 seconds`;
                     `).join('');
                 }
 
-                // CSS Grid Render (BUGS REMOVED & MADE 100% WORKING!)
                 const cssGrid = document.getElementById('cssStylingGrid');
                 if(!dataset.styles || dataset.styles.length === 0) {
                     cssGrid.innerHTML = '<div class="node-box"><div class="empty-log">No external CSS files found on this website.</div></div>';
@@ -835,17 +770,13 @@ Nmap done: 1 IP address (1 host up) scanned in 2.88 seconds`;
                     `).join('');
                 }
 
-                // Static API Paths Render (BUGS REMOVED & MADE 100% WORKING!)
                 const apiList = document.getElementById('apiDiscoveryList');
                 if(!dataset.endpoints || dataset.endpoints.length === 0) {
                     apiList.innerHTML = '<div class="empty-log">No dynamic backend API paths detected in analysis.</div>';
                 } else {
-                    apiList.innerHTML = dataset.endpoints.map(endpoint => `
-                        <li class="api-item">📍 ${endpoint}</li>
-                    `).join('');
+                    apiList.innerHTML = dataset.endpoints.map(endpoint => `<li class="api-item">📍 ${endpoint}</li>`).join('');
                 }
 
-                // Chrome Runtime Server Traffic (BUGS REMOVED & MADE 100% WORKING!)
                 const chromeNetList = document.getElementById('chromeNetworkStreamList');
                 if(!dataset.endpoints || dataset.endpoints.length === 0) {
                     chromeNetList.innerHTML = '<div class="empty-log">No live server requests detected.</div>';
@@ -859,7 +790,6 @@ Nmap done: 1 IP address (1 host up) scanned in 2.88 seconds`;
                     `).join('');
                 }
 
-                // Passwords rendering logic fix (BUGS REMOVED & MADE 100% WORKING!)
                 const vaultList = document.getElementById('credentialVaultDiscoveryList');
                 if(!dataset.leaks || dataset.leaks.length === 0) {
                     vaultList.innerHTML = '<div class="empty-log" style="color: var(--accent-green);">✔ No exposed hardcoded keys or passwords found in public files.</div>';
@@ -881,160 +811,36 @@ Nmap done: 1 IP address (1 host up) scanned in 2.88 seconds`;
             }
         }
 
-        // Professional Encryption Logic (Converts HTML to executable Base64 string that runs directly in browser)
+        // --- ULTRA ADVANCED CLIENT-SIDE OBFUSCATION ENGINE ---
         function encryptHtmlCode() {
             const rawCode = document.getElementById('rawHtmlInputBox').value;
             if(!rawCode.trim()) {
                 alert("Please enter some HTML code first.");
                 return;
             }
-            
             try {
-                // Convert to safe base64
-                const encodedData = btoa(unescape(encodeURIComponent(rawCode)));
+                // CharCodes key mapping with Bitwise XOR Cipher (key: 31)
+                const obfuscatedArray = [];
+                for (let i = 0; i < rawCode.length; i++) {
+                    obfuscatedArray.push(rawCode.charCodeAt(i) ^ 31);
+                }
                 
-                // Wrap in standard browser execution format that renders the page but keeps original source hidden
-                const outputResult = `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Encrypted Page</title>
-</head>
-<body>
-    <script>
-        (function() {
-            var securePayload = "${encodedData}";
-            var decodedHtml = decodeURIComponent(escape(atob(securePayload)));
-            document.open();
-            document.write(decodedHtml);
-            document.close();
-        })();
-    <\/script>
-</body>
-</html>`;
+                // Dynamic Randomized Variable Generation to confuse reverse-engineering engines
+                const arrVar = "_" + Math.random().toString(36).substring(2, 8);
+                const resVar = "_" + Math.random().toString(36).substring(2, 8);
+                const idxVar = "_" + Math.random().toString(36).substring(2, 8);
                 
-                document.getElementById('outputBoxTitle').innerText = "Encrypted HTML Source";
+                const arrayString = JSON.stringify(obfuscatedArray);
+                
+                const outputResult = `<!DOCTYPE html>\n<html>\n<head>\n    <meta charset="UTF-8">\n    <title>Obfuscated Secure Page</title>\n</head>\n<body>\n    <script>\n        (function() {\n            var ${arrVar} = ${arrayString};\n            var ${resVar} = "";\n            for (var ${idxVar} = 0; ${idxVar} < ${arrVar}.length; ${idxVar}++) {\n                ${resVar} += String.fromCharCode(${arrVar}[${idxVar}] ^ 31);\n            }\n            document.open();\n            document.write(${resVar});\n            document.close();\n        })();\n    <\/script>\n</body>\n</html>`;
+                
+                document.getElementById('outputBoxTitle').innerText = "Obfuscated HTML Source [Ready]";
                 document.getElementById('outputBoxTitle').style.color = "var(--accent-green)";
                 document.getElementById('outputBoxWrapper').style.borderColor = "var(--accent-green)";
                 document.getElementById('encryptedOutputCode').innerText = outputResult;
                 document.getElementById('encryptionResultArea').style.display = "block";
             } catch(e) {
-                alert("Error encrypting code. Please verify input formatting.");
-            }
-        }
-
-        // --- NEW ULTRA ADVANCED MULTI-LAYER DEOBFUSCATOR / DECRYPTOR ENGINE ---
-        function decryptHtmlCode() {
-            let code = document.getElementById('rawHtmlInputBox').value.trim();
-            if(!code) {
-                alert("Please paste your encrypted code first.");
-                return;
-            }
-
-            try {
-                let iterations = 0;
-                let lastResult = "";
-                let decryptedResult = code;
-                let converted = false;
-
-                // Loop up to 10 layers deep to resolve nested or chained encodings/obfuscations
-                while (iterations < 10 && decryptedResult !== lastResult) {
-                    lastResult = decryptedResult;
-                    
-                    // 1. IMPROVED REGEX: Captures Nawab style Base64 including numbers, dashes, underscores, and slashes
-                    const base64Regex = /var\s+securePayload\s*=\s*["']([A-Za-z0-9+/=\s-_]+)["']/i;
-                    const match = decryptedResult.match(base64Regex);
-                    if (match && match[1]) {
-                        try {
-                            const cleanedBase64 = match[1].replace(/\s/g, "");
-                            decryptedResult = decodeURIComponent(escape(atob(cleanedBase64)));
-                            converted = true;
-                            continue;
-                        } catch(e) {
-                            // Fallback decoding attempt if escape/unescape fails on pure binary strings
-                            try {
-                                decryptedResult = atob(match[1].replace(/\s/g, ""));
-                                converted = true;
-                                continue;
-                            } catch(innerErr) {}
-                        }
-                    }
-
-                    // 2. Unpack Dean Edwards Packer format evaluation e.g. eval(function(p,a,c,k,e,r)...)
-                    if (decryptedResult.toLowerCase().includes("eval(function(p,a,c,k,e,")) {
-                        try {
-                            // Extract parameters securely from the pack script using a dynamic safe sandbox function
-                            const packerReg = /eval\s*\(\s*function\s*\(\s*p\s*,\s*a\s*,\s*c\s*,\s*k\s*,\s*e\s*,\s*d\s*\)\s*\{(.*?)\}\s*\(\s*['"](.*?)['"]\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*['"](.*?)['"]\.split\(['"]\|['"]\)/s;
-                            const packMatch = decryptedResult.match(/eval\s*\(\s*function\s*\(p,a,c,k,e,.[^)]*\)\s*\{.*\}\s*\((.*)\)\s*\)/s);
-                            
-                            if (packMatch) {
-                                // Execute unpacking math without unsafe eval via virtual string translation map
-                                const rawParams = packMatch[1];
-                                // Prepare function arguments structure securely
-                                const unpackerFunc = new Function("return (function(p,a,c,k,e,d){ e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;})(" + rawParams + ")");
-                                let unpacked = unpackerFunc();
-                                if (unpacked) {
-                                    decryptedResult = unpacked;
-                                    converted = true;
-                                    continue;
-                                }
-                            }
-                        } catch(err) {}
-                    }
-
-                    // 3. Convert Hexadecimal and Unicode Escape Sequences (e.g. \x41 -> A, \u0041 -> A)
-                    if (/\\x[0-9a-fA-F]{2}/.test(decryptedResult) || /\\u[0-9a-fA-F]{4}/.test(decryptedResult)) {
-                        decryptedResult = decryptedResult.replace(/\\x([0-9a-fA-F]{2})/g, (match, hex) => String.fromCharCode(parseInt(hex, 16)));
-                        decryptedResult = decryptedResult.replace(/\\u([0-9a-fA-F]{4})/g, (match, hex) => String.fromCharCode(parseInt(hex, 16)));
-                        converted = true;
-                    }
-
-                    // 4. Decode URL / Percent Encoded strings (e.g. %3Cdiv%3E -> <div>)
-                    if (decryptedResult.includes('%') && /%[0-9a-fA-F]{2}/.test(decryptedResult)) {
-                        try {
-                            let parsedPercent = decodeURIComponent(decryptedResult);
-                            if (parsedPercent !== decryptedResult) {
-                                decryptedResult = parsedPercent;
-                                converted = true;
-                                continue;
-                            }
-                        } catch(e) {}
-                    }
-
-                    // 5. Clean / Decode raw standalone Base64 block
-                    const cleanBase64Candidate = decryptedResult.replace(/\s/g, "");
-                    if (cleanBase64Candidate.length > 15 && /^[A-Za-z0-9+/=]+$/.test(cleanBase64Candidate)) {
-                        try {
-                            let standaloneDecoded = decodeURIComponent(escape(atob(cleanBase64Candidate)));
-                            if (standaloneDecoded) {
-                                decryptedResult = standaloneDecoded;
-                                converted = true;
-                                continue;
-                            }
-                        } catch(e) {}
-                    }
-
-                    iterations++;
-                }
-
-                // If no patterns converted, but document.write is found, grab content
-                if (!converted && decryptedResult.includes("document.write")) {
-                    const docWriteMatch = decryptedResult.match(/document\.write\s*\(\s*["'](.*?)["']\s*\)/);
-                    if (docWriteMatch) {
-                        decryptedResult = docWriteMatch[1];
-                        converted = true;
-                    }
-                }
-
-                // Output result
-                document.getElementById('outputBoxTitle').innerText = converted ? "Decrypted Raw HTML Source Code [Successfully Decoded]" : "Processed HTML Source Code [As-Is]";
-                document.getElementById('outputBoxTitle').style.color = "var(--accent-cyan)";
-                document.getElementById('outputBoxWrapper').style.borderColor = "var(--accent-cyan)";
-                document.getElementById('encryptedOutputCode').innerText = decryptedResult;
-                document.getElementById('encryptionResultArea').style.display = "block";
-
-            } catch (err) {
-                alert("Decryption Failed: " + err.message);
+                alert("Error during obfuscation process: " + e.message);
             }
         }
 
