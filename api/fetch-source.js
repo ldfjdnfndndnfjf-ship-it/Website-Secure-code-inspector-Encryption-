@@ -1,0 +1,118 @@
+const axios = require('axios');
+const cheerio = require('cheerio');
+const { URL } = require('url');
+
+module.exports = async (req, res) => {
+    // Enable CORS headers
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+    }
+
+    let { url } = req.body;
+
+    if (!url) {
+        return res.status(400).json({ error: 'Please provide a target URL.' });
+    }
+
+    // URL formatting & validation
+    if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+    }
+
+    try {
+        const targetUrl = new URL(url);
+        
+        // SSRF Guard: Prevent fetching local or internal resources
+        const forbiddenHosts = ['localhost', '127.0.0.1', '169.254.169.254', '0.0.0.0'];
+        if (forbiddenHosts.includes(targetUrl.hostname)) {
+            return res.status(400).json({ error: 'Access to local or private IP addresses is restricted.' });
+        }
+
+        // Fetch Main HTML Document
+        const response = await axios.get(targetUrl.href, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+            },
+            timeout: 8000 // 8-second timeout limit
+        });
+
+        const html = response.data;
+        const $ = cheerio.load(html);
+
+        const scripts = [];
+        const styles = [];
+        const endpointsSet = new Set();
+        const leaks = [];
+
+        // 1. Extract and resolve JavaScript Files
+        $('script[src]').each((_, el) => {
+            let src = $(el).attr('src');
+            try {
+                const resolvedUrl = new URL(src, targetUrl.href).href;
+                scripts.push({ filename: src.split('/').pop() || 'script.js', url: resolvedUrl, code: `// Loader fetched link:\n// ${resolvedUrl}` });
+            } catch (e) {}
+        });
+
+        // 2. Extract and resolve CSS Files
+        $('link[rel="stylesheet"]').each((_, el) => {
+            let href = $(el).attr('href');
+            try {
+                const resolvedUrl = new URL(href, targetUrl.href).href;
+                styles.push({ filename: href.split('/').pop() || 'style.css', url: resolvedUrl, code: `/* Stylesheet fetched link:\n   ${resolvedUrl} */` });
+            } catch (e) {}
+        });
+
+        // 3. Scan for internal/external links and potential API paths
+        $('a, link, script').each((_, el) => {
+            const val = $(el).attr('href') || $(el).attr('src') || '';
+            if (val.startsWith('/') && val.length > 1) {
+                endpointsSet.add(`${targetUrl.origin}${val}`);
+            } else if (val.includes('api/') || val.includes('/v1/') || val.includes('/v2/')) {
+                endpointsSet.add(val);
+            }
+        });
+
+        // 4. Basic Client-side Secrets Scanner (Matches common patterns in HTML)
+        const credentialRegexes = {
+            'Google API Key': /AIza[0-9A-Za-z-_]{35}/g,
+            'Generic Secret/Token': /["'](api[_-]key|secret|token|password)["']\s*:\s*["']([^"']{6,40})["']/gi,
+            'Firebase Config': /apiKey:\s*["']([^"']+)["']/gi
+        };
+
+        for (const [keyName, regex] of Object.entries(credentialRegexes)) {
+            let match;
+            while ((match = regex.exec(html)) !== null) {
+                leaks.push({
+                    pattern: keyName,
+                    value: match[2] || match[0]
+                });
+            }
+        }
+
+        return res.status(200).json({
+            html: html,
+            scripts: scripts,
+            styles: styles,
+            endpoints: Array.from(endpointsSet).slice(0, 15), // Top 15 endpoints
+            leaks: leaks.slice(0, 5) // Limit leaks shown for display clarity
+        });
+
+    } catch (error) {
+        return res.status(500).json({ 
+            error: `Failed to fetch source: ${error.message}. Make sure the target allows public web requests.` 
+        });
+    }
+};
