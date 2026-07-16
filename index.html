@@ -941,15 +941,23 @@ Nmap done: 1 IP address (1 host up) scanned in 2.88 seconds`;
                 while (iterations < 10 && decryptedResult !== lastResult) {
                     lastResult = decryptedResult;
                     
-                    // 1. Check for standard Nawab style Base64 wrapper pattern
-                    const base64Regex = /var\s+securePayload\s*=\s*["']([A-Za-z0-9+/= \r\n]+)["']/i;
+                    // 1. IMPROVED REGEX: Captures Nawab style Base64 including numbers, dashes, underscores, and slashes
+                    const base64Regex = /var\s+securePayload\s*=\s*["']([A-Za-z0-9+/=\s-_]+)["']/i;
                     const match = decryptedResult.match(base64Regex);
                     if (match && match[1]) {
                         try {
-                            decryptedResult = decodeURIComponent(escape(atob(match[1].replace(/\s/g, ""))));
+                            const cleanedBase64 = match[1].replace(/\s/g, "");
+                            decryptedResult = decodeURIComponent(escape(atob(cleanedBase64)));
                             converted = true;
                             continue;
-                        } catch(e) {}
+                        } catch(e) {
+                            // Fallback decoding attempt if escape/unescape fails on pure binary strings
+                            try {
+                                decryptedResult = atob(match[1].replace(/\s/g, ""));
+                                converted = true;
+                                continue;
+                            } catch(innerErr) {}
+                        }
                     }
 
                     // 2. Unpack Dean Edwards Packer format evaluation e.g. eval(function(p,a,c,k,e,r)...)
